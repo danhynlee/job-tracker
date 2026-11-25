@@ -1,0 +1,28 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  lint-build-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      
+      - name: Lint
+        run: |
+          pip install ruff
+          ruff check app
+      
+      - name: Build image
+        run: docker build -t job-tracker-api .
+
+      - name: Smoke test
+        run: |
+          docker run -d --name job-tracker-api -p 8000:8000 job-tracker-api
+          sleep 5
+          curl --fail http://localhost:8000/health
+          docker logs api
