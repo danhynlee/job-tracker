@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException
-from sqlmodel import Session, select
+from sqlmodel import select
 
 from app.database import SessionDep
 from app.models import Job, JobCreate, JobUpdate, Status
