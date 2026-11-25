@@ -25,4 +25,4 @@ jobs:
           docker run -d --name job-tracker-api -p 8000:8000 job-tracker-api
           sleep 5
           curl --fail http://localhost:8000/health
-          docker logs api
+          docker logs job-tracker-api
